@@ -1,0 +1,6 @@
+[submodule "dysts"]
+	path = repos/dysts
+	url = https://github.com/christiando/dysts.git
+[submodule "darts"]
+	path = repos/darts
+	url = https://github.com/christiando/darts.git

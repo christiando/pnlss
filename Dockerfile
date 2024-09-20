@@ -18,9 +18,7 @@ RUN pip install -U "jax[cuda12]" && \
     
 # Clone the repositories
 # You can add as many `git clone` commands as needed
-RUN git clone https://github.com/christiando/dysts.git && \
-    git clone https://github.com/christiando/darts.git && \
-    git clone https://github.com/christiando/gaussian-toolbox.git && \
+RUN git clone https://github.com/christiando/gaussian-toolbox.git && \
     git clone https://github.com/christiando/timeseries_models.git
 
 # Change the working directory to the first cloned repository and install requirements
