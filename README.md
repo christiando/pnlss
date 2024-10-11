@@ -43,7 +43,7 @@ __Figure 5__: Run `Fig5_violin_plot.ipynb`
 
 __Figure 6__: Run `Fig6_combine_plots.ipynb`
 
-__Figure 7__: Run xxx
+__Figure 7__: Run `Fig7_vectorfield.ipynb`
 
 ## Running the codes for generating figure data
 
@@ -82,3 +82,10 @@ docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/find
 ```
 
 __Figure 7__:
+
+Run the first file to compute the darts models for figure 7, and the second for the pnlss models.
+
+```bash
+docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig7_run_darts_models.py
+docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig7_run_pnlss_models.py
+```
