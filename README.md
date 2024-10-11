@@ -10,14 +10,13 @@ GPU is required to run the codes. The following docker image is built for CUDA12
 ```bash
 git clone https://github.com/christiando/pnlss.git
 cd pnlss
+git submodule update --init --recursive
 
 sudo usermod -aG docker $USER
 newgrp docker
 docker build -t pnlss .
-
-git submodule update --init --recursive
 ```
-This might take a couple of minutes. If not already installed,  install _NVIDIA Container Toolkit_ by following [instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) and run in the following.
+This might take a couple of minutes. Alternatively you can also pull the built image from dockerhub [`chdonner/pnlss`](https://hub.docker.com/repository/docker/chdonner/pnlss/general). If not already installed,  install _NVIDIA Container Toolkit_ by following [instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) and run in the following.
 ```bash
 sudo systemctl restart docker
 ```
