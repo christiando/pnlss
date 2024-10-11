@@ -1,6 +1,6 @@
 # PNLSS Code
 
-This repo provides the necessary code for reproducing the results of the paper...
+This repo provides the necessary code for reproducing the results of the paper _A projected nonlinear state-space model for forecasting time series signals_ ([arxiv](https://arxiv.org/pdf/2311.13247)). If you are interested in only running the PNLSS model, please refer to this [repository](https://github.com/christiando/timeseries_models/blob/main/notebooks/tutorial.ipynb).
 
 
 ## Setup
@@ -12,11 +12,9 @@ git clone https://github.com/christiando/pnlss.git
 cd pnlss
 git submodule update --init --recursive
 
-sudo usermod -aG docker $USER
-newgrp docker
 docker build -t pnlss .
 ```
-This might take a couple of minutes. Alternatively you can also pull the built image from dockerhub [`chdonner/pnlss`](https://hub.docker.com/repository/docker/chdonner/pnlss/general). If not already installed,  install _NVIDIA Container Toolkit_ by following [instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) and run in the following.
+This might take a couple of minutes. Alternatively you can also use/pull the built image from dockerhub [`chdonner/pnlss`](https://hub.docker.com/repository/docker/chdonner/pnlss/general). If not already installed,  install _NVIDIA Container Toolkit_ by following [instructions](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) and run in the following.
 ```bash
 sudo systemctl restart docker
 ```
@@ -46,38 +44,42 @@ __Figure 7__: Run `Fig7_vectorfield.ipynb`
 
 ## Running the codes for generating figure data
 
-The repo comes already with the data for the figures. However, we also provide the code to reproduce the data. Be aware, that this can be time intensive.
+The repo comes already with the data for the figures. However, we also provide the code to reproduce the data. Be aware, that this can be time intensive. First start the docker image from within the `pnlss` folder:
+
+```bash
+docker run --gpus all -it -v "$(pwd):/app" pnlss /bin/bash
+```
 
 __Figure 3__: 
 
 Run the following 
 
 ```bash
-docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_nlss.py
-docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_rbf.py
-docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_nlss.py --fixed
-docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_rbf.py --fixed
+python notebooks/Fig3_computation_time_nlss.py
+python notebooks/Fig3_computation_time_rbf.py
+python notebooks/Fig3_computation_time_nlss.py --fixed
+python notebooks/Fig3_computation_time_rbf.py --fixed
 ```
 
 __Figure 4b, 5, and 6__: These figures use the fitted models and their prediction data. To re-run the benchmarking of the PNL-SS method only, run at pnlss/ (Each file takes ~3 days):
 
 ```bash
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py --pnlss_only
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py --pnlss_only
+python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py --pnlss_only
+python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py --pnlss_only
 ```
 
 To compute the benchmarking of the PNL-SS and all the 13 methods in Darts, comment out the following lines in the codes and run the codes (This will take ~ 1 week):
 
 ```bash
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py
+python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py
+python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py
 ```
 
 The above codes use the optimized hyperparameters. To do the hyperparameter searchers of the PNL-SS and all the 13 methods in Darts, run (Each file takes ~ 3 weeks):
 
 ```bash
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/find_hyperparameters_high.py
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/find_hyperparameters_low.py
+ repos/dysts/benchmarks/find_hyperparameters_high.py
+python repos/dysts/benchmarks/find_hyperparameters_low.py
 ```
 
 __Figure 7__:
@@ -85,6 +87,6 @@ __Figure 7__:
 Run the first file to compute the darts models for figure 7, and the second for the pnlss models.
 
 ```bash
-docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig7_run_darts_models.py
-docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig7_run_pnlss_models.py
+python notebooks/Fig7_run_darts_models.py
+python notebooks/Fig7_run_pnlss.py
 ```
