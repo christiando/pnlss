@@ -19,7 +19,13 @@ RUN pip install -U "jax[cuda12]" && \
 # Clone the repositories
 # You can add as many `git clone` commands as needed
 RUN git clone https://github.com/christiando/gaussian-toolbox.git && \
-    git clone https://github.com/christiando/timeseries_models.git
+    cd gaussian-toolbox && \
+    git checkout 553c5a1b65067a6c2866ebbc92d6b17bf42b92da && \
+    cd .. && \
+    git clone https://github.com/christiando/timeseries_models.git && \
+    cd timeseries_models && \
+    git checkout 8d1bd2c95cb8baf83dcbcd308c495e29808c0194 && \
+    cd ..
 
 # Change the working directory to the first cloned repository and install requirements
 WORKDIR /app/gaussian-toolbox
