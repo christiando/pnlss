@@ -51,44 +51,27 @@ The repo comes already with the data for the figures. However, we also provide t
 
 __Figure 3__: 
 
-First run 
+Run the following 
 
 ```bash
 docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_nlss.py
 docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_rbf.py
-```
-
-Then, comment out the following lines in `Fig3_compuration_time_nlss.py`
-
-```python
-# fix condition
-CONV_CRIT = -1e-10 #1e-4
-MAX_ITER = 50
-f = open('data/lorentz_computation_time_nlss_fix.dat','wb')
-```
-Remove the comments at the following lines
-```python
-# cri condtion
-# CONV_CRIT = 1e-5 #1e-4
-# MAX_ITER = 100
-#f = open('data/lorentz_computation_time_nlss_cri.dat','wb')
+docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_nlss.py --fixed
+docker run --gpus all  -v "$(pwd)":/app pnlss python notebooks/Fig3_computation_time_rbf.py --fixed
 ```
 
 __Figure 4b, 5, and 6__: These figures use the fitted models and their prediction data. To re-run the benchmarking of the PNL-SS method only, run at pnlss/ (Each file takes ~3 days):
 
 ```bash
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py
-docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py
+docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py --pnlss_only
+docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py --pnlss_only
 ```
 
 To compute the benchmarking of the PNL-SS and all the 13 methods in Darts, comment out the following lines in the codes and run the codes (This will take ~ 1 week):
 
-```python
-if model_name in ['LSS_Takens','NLSS_Takens']:
-	print(f"{model_name} exists, but forced to re-fit")
-else:
-	print(equation_name + " " + model_name, flush=True)
-	continue
+```bash
+docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_high.py
+docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/compute_benchmarks_noise_fine_low.py
 ```
 
 The above codes use the optimized hyperparameters. To do the hyperparameter searchers of the PNL-SS and all the 13 methods in Darts, run (Each file takes ~ 3 weeks):
@@ -97,3 +80,5 @@ The above codes use the optimized hyperparameters. To do the hyperparameter sear
 docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/find_hyperparameters_high.py
 docker run --gpus all  -v "$(pwd)":/app pnlss python repos/dysts/benchmarks/find_hyperparameters_low.py
 ```
+
+__Figure 7__:

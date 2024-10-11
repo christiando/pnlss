@@ -17,7 +17,19 @@ from jax import numpy as jnp
 # from gaussian_toolbox.timeseries import state_model, observation_model, ssm
 import gaussian_toolbox
 from timeseries_models import state_model, observation_model, state_space_model
+import argparse
 
+from scipy.integrate import odeint
+from mpl_toolkits.mplot3d import Axes3D
+
+from scipy.integrate import solve_ivp
+from scipy.stats import zscore
+
+import pickle
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--fixed', action='store_true', help='Run fixed condition')
+args = parser.parse_args()
 
 # Settings
 # Noise
@@ -25,18 +37,14 @@ numpy.random.seed(0)
 noise_level = .01 #1.
 
 #EM convergence criteria
-CONV_CRIT = -1e-10 #1e-4
-MAX_ITER = 50
+if args.fixed:
+    CONV_CRIT = -1e-10 #1e-4
+    MAX_ITER = 50
+else:
+    CONV_CRIT = 1e-5 #1e-4
+    MAX_ITER = 100
 
 
-# CONV_CRIT = 1e-5 #1e-4
-# MAX_ITER = 100
-
-from scipy.integrate import odeint
-from mpl_toolkits.mplot3d import Axes3D
-
-from scipy.integrate import solve_ivp
-from scipy.stats import zscore
 
 
 REPEAT = 10
@@ -141,8 +149,9 @@ for repeat in range(REPEAT):
 
 
 # Saving the data
-import pickle
-f = open('data/lorentz_computation_time_rbf_fix.dat','wb')
-#f = open('data/lorentz_computation_time_rbf_cri.dat','wb')
+if args.fixed:
+    f = open('data/lorentz_computation_time_rbf_fix.dat','wb')
+else:
+    f = open('data/lorentz_computation_time_rbf_cri.dat','wb')
 pickle.dump((param_list, computation_time, dimension, likelihood), f)
 f.close
