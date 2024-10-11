@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import os
-sys.path.append(os.path.join(os.getcwd(),'../repos/darts/'))
+sys.path.append(os.path.join(os.getcwd(),'repos/darts/'))
 from darts import TimeSeries
 
 import jax
