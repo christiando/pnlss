@@ -199,3 +199,4 @@ xarray==2024.5.0
 xgboost==2.0.3
 yarl==1.9.4
 zipp==3.19.0
+pycolormap-2d
