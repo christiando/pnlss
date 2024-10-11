@@ -32,11 +32,17 @@ Click on the link, that is prompted in your terminal, and you can execute the no
 ## Running the codes for the figures
 
 __Figure 2__: Run `Fig2_PNLSS-VanderPol.ipynb`
+
 __Figure 3__: Run `Fig3_PNLSS-Lorentz_computation-time.ipynb`
+
 __Figure 4a__: Run `Fig4a_models_Dysts-Darts.ipynb`
+
 __Figure 4b__: Run `Fig4b_models_correlations.ipynb`
+
 __Figure 5__: Run `Fig5_violin_plot.ipynb`
+
 __Figure 6__: Run `Fig6_combine_plots.ipynb`
+
 __Figure 7__: Run xxx
 
 ## Running the codes for generating figure data
