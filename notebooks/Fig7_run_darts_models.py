@@ -23,7 +23,7 @@ models = ['RNN', 'NBEATS', 'Transformer']
 results = {}
 
 for data_name in data_sets:
-    df = pd.read_csv(f'../data/{data_name}_data.csv', header=None)
+    df = pd.read_csv(f'data/{data_name}_data.csv', header=None)
     #df = pd.read_csv('fitzhugh_nagumo_data.csv', header=None)
     df.columns = ['x', 'y']
     df['time'] = np.arange(0, len(df))
@@ -78,5 +78,5 @@ for data_name in data_sets:
         results[data_name][model_name] = traj
 import pickle
 
-with open('../data/fig7_vector_field_darts.pkl', 'wb') as f:
+with open('data/fig7_vector_field_darts.pkl', 'wb') as f:
     pickle.dump(results, f)
